@@ -42,44 +42,31 @@ body {
   text-shadow: 0 2px 18px rgba(217, 178, 91, 0.25);
 }
 
-/* Botão vermelho brilhante (verniz) */
+/* Botões minimalistas: cor chapada, sem brilho nem gradiente */
 .btn-red {
-  position: relative;
-  overflow: hidden;
-  color: #fff6e6;
-  background: linear-gradient(180deg, #e2434d 0%, #b01e2a 48%, #8c1520 52%, #a51c27 100%);
-  border: 1px solid rgba(246, 220, 151, 0.55);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 4px 14px rgba(176, 30, 42, 0.45);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  background: var(--color-crimson);
+  border: 1px solid transparent;
 }
-.btn-red:active { filter: brightness(1.12); }
+.btn-red:active { background: var(--color-wine); }
 .btn-red:disabled {
-  background: #3a1518;
-  color: #a8817d;
-  border-color: #4a2124;
-  box-shadow: none;
+  background: #2a1214;
+  color: #7a5c58;
 }
 
-/* Botão dourado metálico */
 .btn-gold {
-  color: #2a1406;
-  background: linear-gradient(180deg, #fbe7a8 0%, #e2bd66 45%, #c49a45 55%, #e8c776 100%);
-  border: 1px solid #fff0c0;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 4px 14px rgba(217, 178, 91, 0.3);
+  color: #1a0d05;
+  background: var(--color-gold);
+  border: 1px solid transparent;
 }
-.btn-gold:active { filter: brightness(1.08); }
+.btn-gold:active { background: var(--color-gold-2); }
 
-/* Botão verde (tocada / aprovar) */
 .btn-green {
-  color: #f2fff6;
-  background: linear-gradient(180deg, #34b56a 0%, #1f8a4c 50%, #18733f 52%, #1f8a4c 100%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 12px rgba(31, 138, 76, 0.35);
+  color: #fff;
+  background: #1f7a45;
+  border: 1px solid transparent;
 }
+.btn-green:active { background: #18633a; }
 
 /* Cartão escuro com filete dourado */
 .card {
