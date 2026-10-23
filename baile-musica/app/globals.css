@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-night: #120a24;
+  --color-night-2: #1d1038;
+  --color-night-3: #2a1850;
+  --color-gold: #e8c46a;
+  --color-gold-2: #f6dd97;
+  --font-display: Georgia, "Times New Roman", serif;
+}
+
+html,
+body {
+  background: var(--color-night);
+  color: #f3eefe;
+}
+
+body {
+  background-image: radial-gradient(ellipse at top, #2a1850 0%, #120a24 60%);
+  background-attachment: fixed;
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes novo {
+  from { box-shadow: 0 0 0 3px var(--color-gold); background-color: #3a2468; }
+  to { box-shadow: 0 0 0 0 transparent; }
+}
+.novo { animation: novo 6s ease-out; }
