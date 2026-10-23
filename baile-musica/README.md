@@ -35,15 +35,9 @@ Limites: 1 pedido a cada 5 min e 5 por noite por aparelho; 30 por hora por rede.
    Em **Root Directory**, escolha **`baile-musica`** (o app está nesta pasta). Framework: Next.js.
 2. No projeto, aba **Storage → Create Database → Neon (Postgres)**, região São Paulo se aparecer, e conecte ao projeto.
 3. **Settings → Environment Variables** (Production): `DJ_PASSWORD`, `IP_HASH_SALT`, `NEXT_PUBLIC_SITE_URL`.
-4. Crie as tabelas, no seu computador, dentro de `baile-musica/`:
-   ```bash
-   npm install
-   npx vercel link
-   npx vercel env pull .env.local
-   npm run db:init
-   ```
-5. **Deployments → Redeploy** (para pegar as variáveis). Abra a URL no celular e teste.
-6. Com a URL final definida: abra `/cartaz` e imprima (Ctrl+P, A4, "gráficos de fundo" ligado),
+4. **Deployments → Redeploy** (para pegar as variáveis). As tabelas são criadas sozinhas no primeiro acesso
+   (o esquema fica em `lib/schema.ts`; `npm run db:init` faz o mesmo à mão). Abra a URL no celular e teste.
+5. Com a URL final definida: abra `/cartaz` e imprima (Ctrl+P, A4, "gráficos de fundo" ligado),
    ou rode `npm run qr` para gerar `qr/pedir-musica.png` e `.svg`.
 
 As funções rodam em São Paulo (`vercel.json` → `gru1`).

@@ -1,3 +1,6 @@
+// Esquema do banco. Roda sozinho na primeira consulta de cada instância (lib/db.ts)
+// e também por "npm run db:init". Tudo é "if not exists": pode repetir sem erro.
+export const SCHEMA_SQL = `
 -- Pode rodar quantas vezes quiser (npm run db:init): tudo é "if not exists".
 
 create table if not exists requests (
@@ -37,3 +40,11 @@ create table if not exists settings (
 );
 
 insert into settings (key, value) values ('moderation', 'off') on conflict do nothing;
+`;
+
+export const SCHEMA_STATEMENTS: string[] = SCHEMA_SQL.split("\n")
+  .filter((line) => !line.trim().startsWith("--"))
+  .join("\n")
+  .split(/;\s*$/m)
+  .map((s) => s.trim())
+  .filter(Boolean);

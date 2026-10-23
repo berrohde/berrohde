@@ -1,5 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { Pool } from "pg";
+import { SCHEMA_STATEMENTS } from "./schema";
 
 // Uma única função de consulta, sempre parametrizada ($1, $2...).
 // Em produção usa o driver HTTP do Neon; com um Postgres local (localhost) usa o "pg".
@@ -32,7 +33,22 @@ function getQuery(): QueryFn {
   return cached;
 }
 
+let schemaReady: Promise<void> | null = null;
+
+/** Cria as tabelas se ainda não existirem (uma vez por instância). */
+export function ensureSchema(): Promise<void> {
+  schemaReady ??= (async () => {
+    const run = getQuery();
+    for (const stmt of SCHEMA_STATEMENTS) await run(stmt);
+  })().catch((err) => {
+    schemaReady = null;
+    throw err;
+  });
+  return schemaReady;
+}
+
 export async function query<T = Row>(text: string, params: unknown[] = []): Promise<T[]> {
+  await ensureSchema();
   return (await getQuery()(text, params)) as T[];
 }
 
