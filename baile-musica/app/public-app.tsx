@@ -152,11 +152,11 @@ export function PublicApp() {
 
   if (confirm) {
     return (
-      <section className="rounded-2xl border border-gold/40 bg-night-2 p-6 text-center">
-        <p className="text-4xl" aria-hidden="true">
-          🎶
+      <section className="card rounded-2xl p-7 text-center">
+        <p className="gold-text font-display text-5xl" aria-hidden="true">
+          ♫
         </p>
-        <h2 className="mt-2 font-display text-2xl text-gold-2">
+        <h2 className="gold-text mt-2 font-display text-3xl font-bold">
           {confirm.kind === "queued" ? "Pedido enviado!" : "Pedido recebido!"}
         </h2>
         <p className="mt-2 text-lg">
@@ -165,11 +165,11 @@ export function PublicApp() {
             : "Seu pedido está em análise."}
         </p>
         {waitMs > 0 && (
-          <p className="mt-3 text-sm text-purple-200">Você pode pedir outra em {waitMin} min.</p>
+          <p className="mt-3 text-sm text-mist-2">Você pode pedir outra em {waitMin} min.</p>
         )}
         <button
           onClick={() => setConfirm(null)}
-          className="mt-5 min-h-12 w-full rounded-xl bg-gold px-4 font-semibold text-night active:bg-gold-2"
+          className="btn-gold mt-6 min-h-12 w-full rounded-xl px-4 font-semibold"
         >
           Voltar para a busca
         </button>
@@ -192,29 +192,29 @@ export function PublicApp() {
         value={q}
         onChange={(e) => setQ(e.target.value)}
         maxLength={80}
-        className="min-h-12 w-full rounded-xl border border-gold/50 bg-night-2 px-4 text-lg text-white placeholder:text-purple-300/70 focus:border-gold focus:outline-none"
+        className="min-h-14 w-full rounded-2xl border border-gold/60 bg-ink/80 px-5 text-lg text-mist shadow-[inset_0_2px_8px_rgba(0,0,0,0.6)] placeholder:text-mist-3 focus:border-gold-2 focus:shadow-[0_0_0_3px_rgba(217,178,91,0.25)] focus:outline-none"
       />
 
       {waitMs > 0 && (
-        <p className="mt-3 rounded-lg bg-night-3 px-3 py-2 text-center text-sm text-gold-2">
+        <p className="mt-3 rounded-xl border border-gold/30 bg-wine/40 px-3 py-2 text-center text-sm text-gold-2">
           Calma! Você pode pedir de novo em {waitMin} min.
         </p>
       )}
 
       {q.trim().length > 0 && q.trim().length < 2 && (
-        <p className="mt-4 text-center text-sm text-purple-200">Digite pelo menos 2 letras.</p>
+        <p className="mt-4 text-center text-sm text-mist-2">Digite pelo menos 2 letras.</p>
       )}
-      {loading && <p className="mt-4 text-center text-sm text-purple-200">Buscando...</p>}
-      {searchError && !loading && <p className="mt-4 text-center text-sm text-red-300">{searchError}</p>}
+      {loading && <p className="mt-4 text-center text-sm text-mist-2">Buscando...</p>}
+      {searchError && !loading && <p className="mt-4 text-center text-sm text-[#ff8a8f]">{searchError}</p>}
       {!loading && !searchError && q.trim().length >= 2 && results.length === 0 && (
-        <p className="mt-4 text-center text-sm text-purple-200">Nada encontrado. Tente outro nome.</p>
+        <p className="mt-4 text-center text-sm text-mist-2">Nada encontrado. Tente outro nome.</p>
       )}
 
       <ul className="mt-4 space-y-2">
         {results.map((r) => (
           <li
             key={r.trackId}
-            className={`rounded-xl bg-night-2/90 p-2 ${r.allowed ? "" : "opacity-50"}`}
+            className={`card rounded-2xl p-2.5 ${r.allowed ? "" : "opacity-45 grayscale"}`}
           >
             <div className="flex items-center gap-3">
               {r.artworkUrl ? (
@@ -225,34 +225,34 @@ export function PublicApp() {
                   width={52}
                   height={52}
                   loading="lazy"
-                  className="h-13 w-13 shrink-0 rounded-md bg-night-3"
+                  className="h-13 w-13 shrink-0 rounded-lg bg-ink-3 ring-1 ring-gold/30"
                 />
               ) : (
-                <div className="h-13 w-13 shrink-0 rounded-md bg-night-3" />
+                <div className="h-13 w-13 shrink-0 rounded-lg bg-ink-3 ring-1 ring-gold/30" />
               )}
               <div className="min-w-0 flex-1">
                 <p className="truncate font-semibold">{r.trackName}</p>
-                <p className="truncate text-sm text-purple-200">{r.artistName}</p>
+                <p className="truncate text-sm text-mist-2">{r.artistName}</p>
                 {r.allowed && r.review && (
-                  <p className="text-xs text-gold/80">Passa pela análise do grêmio</p>
+                  <p className="text-xs text-gold">Passa pela análise do grêmio</p>
                 )}
               </div>
               {r.allowed ? (
                 <button
                   onClick={() => pedir(r)}
                   disabled={sending !== null || waitMs > 0}
-                  className="min-h-12 shrink-0 rounded-xl bg-gold px-4 font-semibold text-night active:bg-gold-2 disabled:bg-gold/40"
+                  className="btn-red min-h-12 shrink-0 rounded-xl px-5 font-semibold"
                 >
                   {sending === r.trackId ? "Enviando..." : "Pedir"}
                 </button>
               ) : (
-                <span className="shrink-0 px-2 text-right text-xs font-semibold text-red-300">
+                <span className="shrink-0 px-2 text-right text-xs font-semibold text-crimson-2">
                   {r.reason ?? "Não permitida no baile"}
                 </span>
               )}
             </div>
             {rowError?.id === r.trackId && (
-              <p className="mt-2 px-1 text-sm text-red-300" role="alert">
+              <p className="mt-2 px-1 text-sm text-[#ff8a8f]" role="alert">
                 {rowError.msg}
               </p>
             )}

@@ -247,7 +247,7 @@ export function DjPanel() {
 
   if (!data) {
     return (
-      <p className="p-6 text-center text-purple-200">
+      <p className="p-6 text-center text-mist-2">
         {offline ? "Sem conexão com o servidor. Tentando de novo..." : "Carregando..."}
       </p>
     );
@@ -271,16 +271,16 @@ export function DjPanel() {
     <div className="mx-auto max-w-3xl pb-24">
       <audio ref={audioEl} onEnded={() => setPlayingId(null)} preload="none" />
 
-      <header className="sticky top-0 z-10 border-b border-gold/30 bg-night/95 px-3 pb-2 pt-3 backdrop-blur">
+      <header className="sticky top-0 z-10 border-b border-gold/40 bg-gradient-to-b from-[#2a0d10]/95 to-ink/95 px-3 pb-2 pt-3 shadow-[0_6px_20px_rgba(0,0,0,0.5)] backdrop-blur">
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="font-display text-xl text-gold-2">Painel do DJ</h1>
-          <span className="rounded-full bg-gold px-3 py-1 text-sm font-bold text-night">
+          <h1 className="gold-text font-display text-2xl font-bold">Painel do DJ</h1>
+          <span className="btn-gold rounded-full px-3 py-1 text-sm font-bold">
             {data.queued.length} na fila
           </span>
           {data.pending.length > 0 && (
             <button
               onClick={() => setTab("revisao")}
-              className="rounded-full bg-red-500/90 px-3 py-1 text-sm font-bold text-white"
+              className="btn-red rounded-full px-3 py-1 text-sm font-bold"
             >
               {data.pending.length} p/ revisar
             </button>
@@ -289,7 +289,7 @@ export function DjPanel() {
           <div className="ml-auto flex items-center gap-2">
             <button
               onClick={() => setMuted((m) => !m)}
-              className="min-h-10 rounded-lg border border-purple-400/40 px-3 text-sm"
+              className="min-h-10 rounded-lg border border-gold/40 bg-ink/60 px-3 text-sm"
               aria-pressed={muted}
             >
               {muted ? "🔇 Som desligado" : "🔔 Som ligado"}
@@ -300,7 +300,7 @@ export function DjPanel() {
           <input type="checkbox" checked={data.moderation} onChange={toggleModeration} className="h-5 w-5 accent-amber-400" />
           <span>
             Modo aprovação{" "}
-            <span className="text-purple-300">
+            <span className="text-mist-3">
               {data.moderation ? "(ligado: todo pedido passa pelo grêmio)" : "(desligado: só as marcadas passam)"}
             </span>
           </span>
@@ -311,7 +311,7 @@ export function DjPanel() {
                 key={t.key}
                 onClick={() => setTab(t.key)}
                 className={`min-h-11 shrink-0 rounded-lg px-3 text-sm font-semibold ${
-                  tab === t.key ? "bg-gold text-night" : "bg-night-2 text-purple-100"
+                  tab === t.key ? "btn-gold" : "border border-gold/20 bg-ink-2 text-mist"
                 }`}
               >
                 {t.label} ({t.count})
@@ -321,7 +321,7 @@ export function DjPanel() {
       </header>
 
       {list.length === 0 && (
-        <p className="p-8 text-center text-purple-300">
+        <p className="p-8 text-center text-mist-3">
           {tab === "fila" ? "Fila vazia. Os pedidos aparecem aqui sozinhos." : "Nada aqui."}
         </p>
       )}
@@ -334,23 +334,23 @@ export function DjPanel() {
                 ? "border-red-500/80 bg-red-950/40"
                 : r.flag_level === "review_cleaned"
                   ? "border-amber-400/80 bg-amber-950/30"
-                  : "border-purple-400/40 bg-night-2"
-              : "border-transparent bg-night-2";
+                  : "card border-gold/30"
+              : "card";
           return (
-            <li key={r.id} className={`rounded-xl border-2 p-3 ${tone} ${fresh.has(r.id) ? "novo" : ""}`}>
+            <li key={r.id} className={`rounded-2xl border-2 p-3 ${tone} ${fresh.has(r.id) ? "novo" : ""}`}>
               <div className="flex items-start gap-3">
-                {tab === "fila" && <span className="w-7 pt-3 text-right font-display text-xl text-gold">{i + 1}</span>}
+                {tab === "fila" && <span className="w-7 pt-3 text-right font-display text-2xl font-bold text-gold">{i + 1}</span>}
                 {r.artwork_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={r.artwork_url} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-md" />
+                  <img src={r.artwork_url} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-lg ring-1 ring-gold/30" />
                 ) : (
-                  <div className="h-14 w-14 shrink-0 rounded-md bg-night-3" />
+                  <div className="h-14 w-14 shrink-0 rounded-lg bg-ink-3 ring-1 ring-gold/30" />
                 )}
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold leading-tight">{r.track_name}</p>
-                  <p className="text-sm text-purple-200">{r.artist_name}</p>
+                  <p className="text-sm text-mist-2">{r.artist_name}</p>
                   <div className="mt-1 flex flex-wrap gap-1 text-xs">
-                    <span className="text-purple-300">{minutesAgo(r.created_at, serverNow, fetchedAt)}</span>
+                    <span className="text-mist-3">{minutesAgo(r.created_at, serverNow, fetchedAt)}</span>
                     {r.explicitness === "cleaned" && (
                       <span className="rounded bg-amber-400/20 px-1.5 text-amber-200">versão editada</span>
                     )}
@@ -361,9 +361,9 @@ export function DjPanel() {
                       <span className="rounded bg-red-500/30 px-1.5 text-red-200">termos: {r.flag_terms}</span>
                     )}
                     {r.censor && r.status === "queued" && (
-                      <span className="rounded bg-red-600 px-1.5 font-bold text-white">CENSURAR NA TRANSIÇÃO</span>
+                      <span className="btn-red rounded px-1.5 font-bold">CENSURAR NA TRANSIÇÃO</span>
                     )}
-                    {r.status === "skipped" && <span className="rounded bg-purple-500/30 px-1.5">pulada</span>}
+                    {r.status === "skipped" && <span className="rounded bg-crimson/30 px-1.5">pulada</span>}
                     {r.status === "rejected" && (
                       <span className="rounded bg-red-500/30 px-1.5 text-red-200">
                         recusada{r.reject_reason ? `: ${r.reject_reason}` : ""}
@@ -376,39 +376,39 @@ export function DjPanel() {
               <div className="mt-3 flex flex-wrap gap-2">
                 {tab === "fila" && (
                   <>
-                    <Btn className="bg-green-600 text-white" onClick={() => change(r.id, { status: "played" })}>
+                    <Btn className="btn-green" onClick={() => change(r.id, { status: "played" })}>
                       ✓ Tocada
                     </Btn>
-                    <Btn className="bg-purple-700 text-white" onClick={() => change(r.id, { status: "skipped" })}>
+                    <Btn className="border border-gold/40 bg-ink/70 text-mist" onClick={() => change(r.id, { status: "skipped" })}>
                       Pular
                     </Btn>
-                    <Btn className="bg-red-600 text-white" onClick={() => setRejecting(rejecting === r.id ? null : r.id)}>
+                    <Btn className="btn-red" onClick={() => setRejecting(rejecting === r.id ? null : r.id)}>
                       Recusar
                     </Btn>
                   </>
                 )}
                 {tab === "revisao" && (
                   <>
-                    <Btn className="bg-green-600 text-white" onClick={() => change(r.id, { status: "queued", censor: false })}>
+                    <Btn className="btn-green" onClick={() => change(r.id, { status: "queued", censor: false })}>
                       Aprovar
                     </Btn>
                     {r.flag_level !== "ok" && (
-                      <Btn className="bg-amber-500 text-night" onClick={() => change(r.id, { status: "queued", censor: true })}>
+                      <Btn className="btn-gold" onClick={() => change(r.id, { status: "queued", censor: true })}>
                         Aprovar c/ censura
                       </Btn>
                     )}
-                    <Btn className="bg-red-600 text-white" onClick={() => setRejecting(rejecting === r.id ? null : r.id)}>
+                    <Btn className="btn-red" onClick={() => setRejecting(rejecting === r.id ? null : r.id)}>
                       Recusar
                     </Btn>
                   </>
                 )}
                 {tab === "recusadas" && (
-                  <Btn className="bg-gold text-night" onClick={() => change(r.id, { status: "queued" })}>
+                  <Btn className="btn-gold" onClick={() => change(r.id, { status: "queued" })}>
                     Devolver à fila
                   </Btn>
                 )}
                 {r.preview_url && (
-                  <Btn className="border border-purple-400/50" onClick={() => togglePreview(r)}>
+                  <Btn className="border border-gold/40 text-gold-2" onClick={() => togglePreview(r)}>
                     {playingId === r.id ? "■ Parar" : "▶ Prévia"}
                   </Btn>
                 )}
@@ -416,19 +416,19 @@ export function DjPanel() {
                   href={lyricsUrl(r)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex min-h-12 items-center rounded-lg border border-purple-400/50 px-4 text-sm font-semibold"
+                  className="flex min-h-12 items-center rounded-lg border border-gold/40 px-4 text-sm font-semibold text-gold-2"
                 >
                   Letra ↗
                 </a>
               </div>
 
               {rejecting === r.id && (
-                <div className="mt-3 flex flex-wrap items-center gap-2 rounded-lg bg-night/60 p-2">
-                  <span className="text-sm text-purple-200">Motivo:</span>
+                <div className="mt-3 flex flex-wrap items-center gap-2 rounded-lg bg-ink/60 p-2">
+                  <span className="text-sm text-mist-2">Motivo:</span>
                   {REASONS.map((reason) => (
                     <Btn
                       key={reason}
-                      className="bg-red-700 text-white"
+                      className="btn-red"
                       onClick={() => change(r.id, { status: "rejected", reason })}
                     >
                       {reason}
@@ -442,7 +442,7 @@ export function DjPanel() {
       </ol>
 
       <div className="mt-12 px-3 text-center">
-        <button onClick={wipe} className="min-h-10 text-xs text-purple-400 underline">
+        <button onClick={wipe} className="min-h-10 text-xs text-mist-3 underline">
           Apagar tudo (fim da festa)
         </button>
       </div>
@@ -450,7 +450,7 @@ export function DjPanel() {
       {toast && (
         <div
           role="status"
-          className="fixed inset-x-3 bottom-4 z-20 mx-auto max-w-md rounded-xl bg-red-700 px-4 py-3 text-center text-sm font-semibold shadow-lg"
+          className="fixed inset-x-3 bottom-4 z-20 mx-auto max-w-md rounded-xl border border-gold/50 bg-wine px-4 py-3 text-center text-sm font-semibold shadow-lg"
         >
           {toast}
         </div>

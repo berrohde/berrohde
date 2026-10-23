@@ -5,7 +5,7 @@ export function PrintButton() {
     <div className="no-print flex justify-center gap-3 p-3">
       <button
         onClick={() => window.print()}
-        className="min-h-12 rounded-xl bg-gold px-6 font-semibold text-night"
+        className="btn-gold min-h-12 rounded-xl px-6 font-semibold"
       >
         Imprimir (A4)
       </button>
